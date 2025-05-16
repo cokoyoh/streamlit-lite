@@ -41,7 +41,7 @@ if uploaded_file is not None:
         df.sort_values('Date', inplace=True)
         ax.plot(df['Date'], df['Weight'], marker='o')
         ax.set_title("Weight Over Time")
-        ax.set_xlabel("Date")
+        ax.set_xlabel("Date from April 1st to April 15th")
         ax.set_ylabel("Weight (kg)")
         st.pyplot(fig)
     else:
