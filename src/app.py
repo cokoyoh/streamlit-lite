@@ -3,8 +3,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import requests
 
-TEMP_API_KEY = "Eh8ggQwxE5lEj5Nx/88ZUg==shmtAU0pfkRsNL1K"
-
 # Initialize session state for page navigation
 if "page" not in st.session_state:
     st.session_state.page = "BMI Calculator"  # Default page
@@ -78,7 +76,7 @@ elif st.session_state.page == "Nutrition Lookup":
     @st.cache_data
     def get_food_nutrition(query):
         url = "https://api.calorieninjas.com/v1/nutrition?query=" + query
-        headers = {"X-Api-Key": TEMP_API_KEY}
+        headers = {"X-Api-Key": st.secrets["API_KEY"]}
         response = requests.get(url, headers=headers)
         return response.json()
 
