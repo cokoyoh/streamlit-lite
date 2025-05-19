@@ -3,6 +3,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import requests
 
+st.set_page_config(layout="wide")
+
 # Initialize session state for page navigation
 if "page" not in st.session_state:
     st.session_state.page = "BMI Calculator"  # Default page

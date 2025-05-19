@@ -1,0 +1,8 @@
+name: sample-streamlit-app
+type: streamlit
+files:
+  - src/app.py
+  - requirements.txt
+env:
+  python: 3.12
+  requirements_file: requirements.txt
