@@ -10,13 +10,13 @@ if "page" not in st.session_state:
     st.session_state.page = "BMI Calculator"  # Default page
 
 # Sidebar for navigation with buttons
-st.sidebar.title("Navigation")
+st.sidebar.title("Nutrition App")
 if st.sidebar.button("BMI Calculator"):
     st.session_state.page = "BMI Calculator"
-if st.sidebar.button("Nutrition Lookup"):
-    st.session_state.page = "Nutrition Lookup"
 if st.sidebar.button("Weight Tracker"):
     st.session_state.page = "Weight Tracker"
+if st.sidebar.button("Nutrition Lookup"):
+    st.session_state.page = "Nutrition Lookup"
 
 # BMI Calculator Page
 if st.session_state.page == "BMI Calculator":
