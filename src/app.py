@@ -1,6 +1,9 @@
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
+import requests
+
+TEMP_API_KEY = "Eh8ggQwxE5lEj5Nx/88ZUg==shmtAU0pfkRsNL1K"
 
 st.title("BMI Calculator")
 st.write("This is a simple BMI calculator app.")
@@ -22,6 +25,45 @@ if st.button("Calculate BMI"):
             st.write("You are overweight.")
         else:
             st.write("You are obese.")
+            
+
+@st.cache_data
+def get_food_nutrition(query):
+    url = "https://api.calorieninjas.com/v1/nutrition?query=" + query
+    headers = {'X-Api-Key': TEMP_API_KEY}
+    response = requests.get(url, headers=headers)
+    return response.json()
+
+st.title("Nutrition Lookup")
+
+food = st.text_input("Enter a food item:")
+if st.button("Get Nutrition"):
+    if food:
+        result = get_food_nutrition(food)
+        if 'items' in result:
+            # Convert the result to a pandas DataFrame for better styling
+            nutrition_data = pd.DataFrame(result['items'])
+            
+            # Remove underscores, capitalize column titles, and replace 'G' with '(gm)'
+            nutrition_data.columns = (
+                nutrition_data.columns
+                .str.replace('_', ' ')  # Replace underscores with spaces
+                .str.title()           # Capitalize column titles
+                .str.replace(' G', ' (gm)', regex=False)  # Replace ' G' with ' (gm)'
+            )
+            
+            # Format numeric values to 2 decimal places
+            nutrition_data = nutrition_data.applymap(
+                lambda x: f"{x:.2f}" if isinstance(x, (int, float)) else x
+            )
+            
+            # Reset the index to remove it from the table
+            nutrition_data.reset_index(drop=True, inplace=True)
+            
+            st.write("### Nutrition Information")
+            st.table(nutrition_data)  # Display the data as a table
+        else:
+            st.error("No data found.")
 
 
 st.title("Weight Tracker")
